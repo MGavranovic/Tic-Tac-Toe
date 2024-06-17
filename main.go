@@ -22,38 +22,47 @@ var player int = 2
 // var for holding user input
 var userInput string
 
+// this variable is used for making a do while loop so I can run stuff as long as the program is running or certain conditions
+// (win or draw) are met
+var running bool = true
+
 func main() {
-	displayField()
-	// testing how to access elements of slice
-	fmt.Println(PlayingField[0][0])
+	for {
+		displayField()
+		// testing how to access elements of slice
+		fmt.Println(PlayingField[0][0])
 
-	// players logic
-	if player == 1 {
-		// EnterXoO(userInput)
-		player = 2
-	} else if player == 2 {
-		// EnterXoO(userInput)
-		player = 1
-	}
+		// players logic
+		if player == 1 {
+			// EnterXoO(userInput)
+			player = 2
+		} else if player == 2 {
+			// EnterXoO(userInput)
+			player = 1
+		}
 
-	// taking user input
-	// TODO: will have implement error handling for user input
-	fmt.Print("Please enter a number 1-9: ")
-	fmt.Scan(&userInput)
-	fmt.Println(userInput)
+		// taking user input
+		// TODO: will have implement error handling for user input
+		fmt.Print("Please enter a number 1-9: ")
+		fmt.Scan(&userInput)
+		fmt.Println(userInput)
 
-	// looping over the PlayingField and assigning user input to the selected field
-	for i := 0; i < len(PlayingField); i++ {
-		for j := 0; j < len(PlayingField); j++ {
-			if PlayingField[i][j] == userInput {
-				if player == 1 {
-					PlayingField[i][j] = "X"
-				} else if player == 2 {
-					PlayingField[i][j] = "O"
+		// looping over the PlayingField and assigning user input to the selected field
+		for i := 0; i < len(PlayingField); i++ {
+			for j := 0; j < len(PlayingField); j++ {
+				if PlayingField[i][j] == userInput {
+					if player == 1 {
+						PlayingField[i][j] = "X"
+					} else if player == 2 {
+						PlayingField[i][j] = "O"
+					}
+					// displaying the updated field
+					displayField()
 				}
-				// displaying the updated field
-				displayField()
 			}
+		}
+		if running == false {
+			break
 		}
 	}
 }
