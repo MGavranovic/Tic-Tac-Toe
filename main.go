@@ -47,20 +47,6 @@ func main() {
 		fmt.Println(userInput)
 
 		updateField()
-		// // looping over the PlayingField and assigning user input to the selected field
-		// for i := 0; i < len(PlayingField); i++ {
-		// 	for j := 0; j < len(PlayingField); j++ {
-		// 		if PlayingField[i][j] == userInput {
-		// 			if player == 1 {
-		// 				PlayingField[i][j] = "X"
-		// 			} else if player == 2 {
-		// 				PlayingField[i][j] = "O"
-		// 			}
-		// 			// displaying the updated field
-		// 			// displayField()
-		// 		}
-		// 	}
-		// }
 		if !running {
 			break
 		}
