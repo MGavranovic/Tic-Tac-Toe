@@ -34,33 +34,34 @@ func main() {
 
 		// players logic
 		if player == 1 {
-			// EnterXoO(userInput)
 			player = 2
 		} else if player == 2 {
-			// EnterXoO(userInput)
 			player = 1
 		}
 
 		// taking user input
 		// TODO: will have implement error handling for user input
+		// TODO: selectable options can be stored in an array
+		// if an item doesn't exist in that array, it can't be selected
 		fmt.Print("Please enter a number 1-9: ")
 		fmt.Scan(&userInput)
 		fmt.Println(userInput)
 
-		// looping over the PlayingField and assigning user input to the selected field
-		for i := 0; i < len(PlayingField); i++ {
-			for j := 0; j < len(PlayingField); j++ {
-				if PlayingField[i][j] == userInput {
-					if player == 1 {
-						PlayingField[i][j] = "X"
-					} else if player == 2 {
-						PlayingField[i][j] = "O"
-					}
-					// displaying the updated field
-					displayField()
-				}
-			}
-		}
+		updateField()
+		// // looping over the PlayingField and assigning user input to the selected field
+		// for i := 0; i < len(PlayingField); i++ {
+		// 	for j := 0; j < len(PlayingField); j++ {
+		// 		if PlayingField[i][j] == userInput {
+		// 			if player == 1 {
+		// 				PlayingField[i][j] = "X"
+		// 			} else if player == 2 {
+		// 				PlayingField[i][j] = "O"
+		// 			}
+		// 			// displaying the updated field
+		// 			// displayField()
+		// 		}
+		// 	}
+		// }
 		if running == false {
 			break
 		}
@@ -71,5 +72,22 @@ func main() {
 func displayField() {
 	for i := 0; i < len(PlayingField); i++ {
 		fmt.Printf("%s\n", strings.Join(PlayingField[i], " "))
+	}
+}
+
+func updateField() {
+	// looping over the PlayingField and assigning user input to the selected field
+	for i := 0; i < len(PlayingField); i++ {
+		for j := 0; j < len(PlayingField); j++ {
+			if PlayingField[i][j] == userInput {
+				if player == 1 {
+					PlayingField[i][j] = "X"
+				} else if player == 2 {
+					PlayingField[i][j] = "O"
+				}
+				// displaying the updated field
+				// displayField()
+			}
+		}
 	}
 }
