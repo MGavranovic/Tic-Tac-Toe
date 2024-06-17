@@ -16,6 +16,8 @@ var PlayingField = [][]string{
 	{"| ", " ", " | ", " ", " | ", " ", " |"},
 }
 
+// TODO: have to add players
+
 // var for holding user input
 var userInput string
 
@@ -23,7 +25,7 @@ func main() {
 	displayField()
 
 	// taking user input
-	// TODO: will have
+	// TODO: will have implement error handling for user input
 	fmt.Print("Please enter a number 1-9: ")
 	fmt.Scan(&userInput)
 	fmt.Println(userInput)
