@@ -28,9 +28,8 @@ var running bool = true
 
 func main() {
 	for {
+		clearScreen()
 		displayField()
-		// testing how to access elements of slice
-		fmt.Println(PlayingField[0][0])
 
 		// players logic
 		if player == 1 {
@@ -62,7 +61,7 @@ func main() {
 		// 		}
 		// 	}
 		// }
-		if running == false {
+		if !running {
 			break
 		}
 	}
@@ -90,4 +89,9 @@ func updateField() {
 			}
 		}
 	}
+}
+
+// clears the console so the field stays on top and the input field gets reset
+func clearScreen() {
+	fmt.Print("\033[H\033[2J")
 }
