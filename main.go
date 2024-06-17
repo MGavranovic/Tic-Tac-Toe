@@ -17,12 +17,24 @@ var PlayingField = [][]string{
 }
 
 // TODO: have to add players
+var player int = 2
 
 // var for holding user input
 var userInput string
 
 func main() {
 	displayField()
+	// testing how to access elements of slice
+	fmt.Println(PlayingField[0][0])
+
+	// players logic
+	if player == 1 {
+		// EnterXoO(userInput)
+		player = 2
+	} else if player == 2 {
+		// EnterXoO(userInput)
+		player = 1
+	}
 
 	// taking user input
 	// TODO: will have implement error handling for user input
@@ -34,7 +46,12 @@ func main() {
 	for i := 0; i < len(PlayingField); i++ {
 		for j := 0; j < len(PlayingField); j++ {
 			if PlayingField[i][j] == userInput {
-				PlayingField[i][j] = "X"
+				if player == 1 {
+					PlayingField[i][j] = "X"
+				} else if player == 2 {
+					PlayingField[i][j] = "O"
+				}
+				// displaying the updated field
 				displayField()
 			}
 		}
