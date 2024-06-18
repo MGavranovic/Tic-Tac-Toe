@@ -30,10 +30,14 @@ var running bool = true
 var inputValid bool
 var possibleInputSlice = []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
+// this var will be used for draw condition
+var turns int = 0
+
 func main() {
 	for {
 		clearScreen()
 		displayField()
+		checkVictoryCondition()
 
 		// players logic
 		if player == 1 {
@@ -94,6 +98,7 @@ func updateField() {
 				updatePossibleEntries(possibleInputSlice, userInput)
 			}
 		}
+		turns++
 	}
 }
 
@@ -111,4 +116,27 @@ func updatePossibleEntries(slice []string, el string) []string {
 	}
 	// returns a new slice with an element removed
 	return slice
+}
+
+// function for checking victory conditions and displaying the victory/draw message
+func checkVictoryCondition() {
+	playerSign := []string{"X", "O"}
+	for i := 0; i < len(playerSign); i++ {
+		if PlayingField[1][1] == playerSign[i] && PlayingField[1][3] == playerSign[i] && PlayingField[1][5] == playerSign[i] ||
+			PlayingField[3][1] == playerSign[i] && PlayingField[3][3] == playerSign[i] && PlayingField[3][5] == playerSign[i] ||
+			PlayingField[5][1] == playerSign[i] && PlayingField[5][3] == playerSign[i] && PlayingField[5][5] == playerSign[i] ||
+			PlayingField[1][1] == playerSign[i] && PlayingField[3][1] == playerSign[i] && PlayingField[5][1] == playerSign[i] ||
+			PlayingField[1][3] == playerSign[i] && PlayingField[3][3] == playerSign[i] && PlayingField[5][3] == playerSign[i] ||
+			PlayingField[1][5] == playerSign[i] && PlayingField[3][5] == playerSign[i] && PlayingField[5][5] == playerSign[i] ||
+			PlayingField[1][1] == playerSign[i] && PlayingField[3][3] == playerSign[i] && PlayingField[5][5] == playerSign[i] ||
+			PlayingField[1][5] == playerSign[i] && PlayingField[3][3] == playerSign[i] && PlayingField[5][1] == playerSign[i] {
+			if playerSign[i] == "X" {
+				fmt.Println("Player 1 won")
+			} else {
+				fmt.Println("Player 2 won")
+			}
+		} else if turns == 10 {
+			fmt.Println("DRAW!")
+		}
+	}
 }
