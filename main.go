@@ -26,6 +26,10 @@ var userInput string
 // (win or draw) are met
 var running bool = true
 
+// this vars will be used for checking inputs
+var inputValid bool
+var possibleInputSlice = []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+
 func main() {
 	for {
 		clearScreen()
@@ -42,9 +46,24 @@ func main() {
 		// TODO: will have implement error handling for user input
 		// TODO: selectable options can be stored in an array
 		// if an item doesn't exist in that array, it can't be selected
-		fmt.Print("Please enter a number 1-9: ")
-		fmt.Scan(&userInput)
-		fmt.Println(userInput)
+		for {
+			fmt.Print("Please enter a number 1-9: ")
+			fmt.Scan(&userInput)
+			fmt.Println(userInput)
+
+			inputValid = false
+			for i := 0; i < len(possibleInputSlice); i++ {
+				if possibleInputSlice[i] == userInput {
+					inputValid = true
+					break
+				}
+			}
+			if inputValid {
+				break
+			} else {
+				fmt.Println("Invalid input! Please select a number in range 1-9 and press ENTER")
+			}
+		}
 
 		updateField()
 		if !running {
@@ -70,8 +89,9 @@ func updateField() {
 				} else if player == 2 {
 					PlayingField[i][j] = "O"
 				}
-				// displaying the updated field
-				// displayField()
+
+				// remove the element from the slice
+				updatePossibleEntries(possibleInputSlice, userInput)
 			}
 		}
 	}
@@ -80,4 +100,15 @@ func updateField() {
 // clears the console so the field stays on top and the input field gets reset
 func clearScreen() {
 	fmt.Print("\033[H\033[2J")
+}
+
+// used for removing removing elements so we can have error handling with user input
+func updatePossibleEntries(slice []string, el string) []string {
+	for i := 0; i < len(slice); i++ {
+		if slice[i] == el {
+			return append(slice[:i], slice[i+1:]...)
+		}
+	}
+	// returns a new slice with an element removed
+	return slice
 }
