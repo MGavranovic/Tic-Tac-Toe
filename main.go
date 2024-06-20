@@ -16,6 +16,20 @@ var PlayingField = [][]string{
 	{"| ", " ", " | ", " ", " | ", " ", " |"},
 }
 
+// initial field used for resetting
+var initialField = [][]string{
+	{"| ", " ", " | ", " ", " | ", " ", " |"},
+	{"| ", "1", " | ", "2", " | ", "3", " |"},
+	{"| ", "-", " | ", "-", " | ", "-", " |"},
+	{"| ", "4", " | ", "5", " | ", "6", " |"},
+	{"| ", "-", " | ", "-", " | ", "-", " |"},
+	{"| ", "7", " | ", "8", " | ", "9", " |"},
+	{"| ", " ", " | ", " ", " | ", " ", " |"},
+}
+
+// used for resetting the field
+var gameDone bool = false
+
 // TODO: have to add players
 var player int = 2
 
@@ -29,15 +43,32 @@ var running bool = true
 // this vars will be used for checking inputs
 var inputValid bool
 var possibleInputSlice = []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+var initialPossibleInputSlice = []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
 // this var will be used for draw condition
 var turns int = 0
 
 func main() {
-	for {
+	for running {
+		if gameDone {
+			clearScreen()
+			displayField()
+			fmt.Print("Hit R to reset the game: ")
+			fmt.Scan(&userInput)
+			if strings.ToLower(userInput) == "r" {
+				resetField()
+				gameDone = false
+			}
+			continue
+		}
+
 		clearScreen()
 		displayField()
 		checkVictoryCondition()
+
+		if gameDone {
+			continue
+		}
 
 		// players logic
 		if player == 1 {
@@ -53,7 +84,7 @@ func main() {
 		for {
 			fmt.Print("Please enter a number 1-9: ")
 			fmt.Scan(&userInput)
-			fmt.Println(userInput)
+			// fmt.Println(userInput)
 
 			inputValid = false
 			for i := 0; i < len(possibleInputSlice); i++ {
@@ -95,10 +126,10 @@ func updateField() {
 				}
 
 				// remove the element from the slice
-				updatePossibleEntries(possibleInputSlice, userInput)
+				possibleInputSlice = updatePossibleEntries(possibleInputSlice, userInput)
+				turns++
 			}
 		}
-		turns++
 	}
 }
 
@@ -130,13 +161,36 @@ func checkVictoryCondition() {
 			PlayingField[1][5] == playerSign[i] && PlayingField[3][5] == playerSign[i] && PlayingField[5][5] == playerSign[i] ||
 			PlayingField[1][1] == playerSign[i] && PlayingField[3][3] == playerSign[i] && PlayingField[5][5] == playerSign[i] ||
 			PlayingField[1][5] == playerSign[i] && PlayingField[3][3] == playerSign[i] && PlayingField[5][1] == playerSign[i] {
+
 			if playerSign[i] == "X" {
 				fmt.Println("Player 1 won")
+				gameDone = true
 			} else {
 				fmt.Println("Player 2 won")
+				gameDone = true
 			}
+
 		} else if turns == 10 {
 			fmt.Println("DRAW!")
+			gameDone = true
+			return
 		}
 	}
+}
+
+// func for resetting the field after the game is done
+func resetField() {
+	// have to make it as a copy as if use as regular assignment, it will point to the same memory location
+	// changing one will affect both
+	// PlayingField = initialField
+	// possibleInputSlice = initialPossibleInputSlice
+	PlayingField = make([][]string, len(initialField))
+	for i := range initialField {
+		PlayingField[i] = make([]string, len(initialField[i]))
+		copy(PlayingField[i], initialField[i])
+	}
+	possibleInputSlice = make([]string, len(initialPossibleInputSlice))
+	copy(possibleInputSlice, initialPossibleInputSlice)
+	turns = 0
+	player = 2
 }
