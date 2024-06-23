@@ -48,11 +48,20 @@ var initialPossibleInputSlice = []string{"1", "2", "3", "4", "5", "6", "7", "8",
 // this var will be used for draw condition
 var turns int = 0
 
+// this var used for holding the score value
+type Score struct {
+	X, O int
+}
+
+// declaring score
+var score = Score{0, 0}
+
 func main() {
 	for running {
 		if gameDone {
 			clearScreen()
 			displayField()
+			fmt.Printf("X:%v - O:%v\n", score.X, score.O)
 			fmt.Print("Hit R to reset the game: ")
 			fmt.Scan(&userInput)
 			if strings.ToLower(userInput) == "r" {
@@ -165,9 +174,13 @@ func checkVictoryCondition() {
 			if playerSign[i] == "X" {
 				fmt.Println("Player 1 won")
 				gameDone = true
+				// update the score
+				score.X++
 			} else {
 				fmt.Println("Player 2 won")
 				gameDone = true
+				// update the score
+				score.O++
 			}
 
 		} else if turns == 10 {
