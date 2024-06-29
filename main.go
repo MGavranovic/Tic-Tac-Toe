@@ -62,9 +62,13 @@ func main() {
 			clearScreen()
 			displayField()
 			fmt.Printf("X:%v - O:%v\n", score.X, score.O)
-			fmt.Print("Hit R to reset the game: ")
+			fmt.Printf("Hit 'r' if you just want to reset the playing field\nHit 'R' to reset both the field and the score:")
 			fmt.Scan(&userInput)
-			if strings.ToLower(userInput) == "r" {
+			if userInput == "r" {
+				resetField()
+				gameDone = false
+			} else if userInput == "R" {
+				resetScore()
 				resetField()
 				gameDone = false
 			}
@@ -206,4 +210,10 @@ func resetField() {
 	copy(possibleInputSlice, initialPossibleInputSlice)
 	turns = 0
 	player = 2
+}
+
+// very simple func for resetting the score
+// I'm making it as a function as it makes the code more readable
+func resetScore() {
+	score = Score{0, 0}
 }
