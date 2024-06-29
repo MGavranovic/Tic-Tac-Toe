@@ -56,11 +56,25 @@ type Score struct {
 // declaring score
 var score = Score{0, 0}
 
+// var used for displaying victory condition messages
+var winner string = ""
+
 func main() {
 	for running {
 		if gameDone {
 			clearScreen()
 			displayField()
+
+			// displaying the message for win/draw
+			switch winner {
+			case "X":
+				fmt.Printf("Player %v won!\n", winner)
+			case "O":
+				fmt.Printf("Player %v won!\n", winner)
+			case "D":
+				fmt.Println("Draw!")
+			}
+
 			fmt.Printf("X:%v - O:%v\n", score.X, score.O)
 			fmt.Printf("Hit 'r' if you just want to reset the playing field\nHit 'R' to reset both the field and the score:")
 			fmt.Scan(&userInput)
@@ -176,20 +190,21 @@ func checkVictoryCondition() {
 			PlayingField[1][5] == playerSign[i] && PlayingField[3][3] == playerSign[i] && PlayingField[5][1] == playerSign[i] {
 
 			if playerSign[i] == "X" {
-				fmt.Println("Player 1 won")
 				gameDone = true
+				winner = "X"
 				// update the score
 				score.X++
 			} else {
-				fmt.Println("Player 2 won")
 				gameDone = true
+				winner = "O"
 				// update the score
 				score.O++
 			}
 
 		} else if turns == 9 {
-			fmt.Println("DRAW!")
 			gameDone = true
+			// "D" for draw
+			winner = "D"
 			return
 		}
 	}
