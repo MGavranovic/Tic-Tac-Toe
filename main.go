@@ -187,7 +187,7 @@ func checkVictoryCondition() {
 				score.O++
 			}
 
-		} else if turns == 10 {
+		} else if turns == 9 {
 			fmt.Println("DRAW!")
 			gameDone = true
 			return
