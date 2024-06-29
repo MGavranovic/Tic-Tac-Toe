@@ -200,12 +200,13 @@ func checkVictoryCondition() {
 				// update the score
 				score.O++
 			}
-
-		} else if turns == 9 {
+			// exit the function if there is a winner
+			return
+		}
+		if turns == 9 {
 			gameDone = true
 			// "D" for draw
 			winner = "D"
-			return
 		}
 	}
 }
